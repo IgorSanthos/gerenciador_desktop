@@ -1,25 +1,7 @@
-import requests
 import shutil
-import pandas as pd
 import os
 from pathlib import Path
 from datetime import datetime, timedelta
-
-df_filtrado = pd.DataFrame([
-    {
-        "DataCluster": "01",
-        "Nome": "Cliente1",
-        "Origem": r"C:\Users\Igor\Desktop\Jettax\geral\dia1\Cliente_jettax100",
-        "Destino": r"C:\Users\Igor\Desktop\Cliente\Cliente1"
-    },
-    {
-        "DataCluster": "01",
-        "Nome": "Cliente2",
-        "Origem": r"C:\Users\Igor\Desktop\Jettax\geral\dia1\Cliente_jettax2",
-        "Destino": r"C:\Users\Igor\Desktop\\Cliente\Cliente2"
-    }
-] )
-
 
 def move_files(df_filtrado):
     data_atual = datetime.now()
@@ -95,10 +77,3 @@ def save_messages_list_to_desktop(messages_list):
             file.write(f"{message}\n")
 
     print(f"Mensagens salvas com sucesso em {file_path}")
-
-
-messages = move_files(df_filtrado)
-
-if messages:
-    for message in messages:
-        print('Erro el aglum cliente')
