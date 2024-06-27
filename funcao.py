@@ -1,100 +1,104 @@
-import pandas as pd
+import requests
 import shutil
+import pandas as pd
+import os
 from pathlib import Path
-from PyQt5.QtWidgets import QApplication, QMessageBox, QInputDialog
+from datetime import datetime, timedelta
 
-# Instância do QApplication
-app = QApplication([])
+df_filtrado = pd.DataFrame([
+    {
+        "DataCluster": "01",
+        "Nome": "Cliente1",
+        "Origem": r"C:\Users\Igor\Desktop\Jettax\geral\dia1\Cliente_jettax100",
+        "Destino": r"C:\Users\Igor\Desktop\Cliente\Cliente1"
+    },
+    {
+        "DataCluster": "01",
+        "Nome": "Cliente2",
+        "Origem": r"C:\Users\Igor\Desktop\Jettax\geral\dia1\Cliente_jettax2",
+        "Destino": r"C:\Users\Igor\Desktop\\Cliente\Cliente2"
+    }
+] )
 
-# Caminho do arquivo Excel
-caminho_excel = Path(r'W:\Shared With Me\Clientes\Fenix Assessoria\Planilhas\RELAÇÃO JETTAX2.xlsx')
 
-# Exibir caixa de diálogo de entrada
-text, ok = QInputDialog.getText(None, "CLUSTER", "Insira a data do Cluster:")
+def move_files(df_filtrado):
+    data_atual = datetime.now()
+    primeiro_dia_mes_atual = data_atual.replace(day=1)
+    ultimo_dia_mes_anterior = primeiro_dia_mes_atual - timedelta(days=1)
+    mes_anterior = ultimo_dia_mes_anterior.strftime('%m')
+    ano_atual = ultimo_dia_mes_anterior.strftime('%Y')
+    dtCliente_Atual = f"{mes_anterior}_{ano_atual}"
 
-# Verificar se o usuário pressionou "OK"
-if ok:
-    # Definir o caminho para salvar o arquivo de log na área de trabalho
-    caminho_area_trabalho = Path.home() / 'Desktop'
-    caminho_arquivo_log = caminho_area_trabalho / 'log_erros.txt'
+    dtCliente = '04_2024'
+    messages_list = []  # Inicializa a lista vazia para armazenar as mensagens
+    df = df_filtrado
+    try:
+        for index, row in df.iterrows():
+            #caminho Origem
+            clienteJettax = Path(row['Origem'])
+            #verificar se tem algum erro de Origem
+            if not clienteJettax.exists():
+                messages_list.append (f"Caminho de origem não encontrado: {clienteJettax}")
+                save_messages_list_to_desktop(messages_list)
 
-    erros_ocorridos = False
+            #caminho DEstino
+            clienteDest = Path(row['Destino']) / dtCliente
+            arquivos = {
+                'enviada': list(clienteJettax.glob('enviada*')),
+                'recebida': list(clienteJettax.glob('recebido*')),
+                'nfts': list((clienteJettax / 'nfts').glob('nft*')),
+                'guia': list((clienteJettax / 'guia').glob('guia*'))
+            }
+            destinos = {
+                'nfs': [clienteDest /'Arquivos XML/Serviços Prestados', clienteDest / 'Arquivos XML/Serviços Tomados'],
+                'iss': clienteDest /'Tributos'
+            }
 
-    # Abrir o arquivo de log para escrita
-    with open(caminho_arquivo_log, 'w') as arquivo_log:
-        try:
-            # Ler a planilha Excel
-            df = pd.read_excel(caminho_excel, sheet_name=f'Cluster_{text}')
+            # Envio para Movimentação de Arquivos
+            for arquivo in arquivos['enviada']:
+                shutil.copy(arquivo, destinos['nfs'][0])
+                
+            for arquivo in arquivos['recebida']:
+                shutil.copy(arquivo, destinos['nfs'][1])
 
-            # Iterar sobre as linhas da planilha
-            for index, row in df.iterrows():
-                caminho_origem = Path(row['ORIGEM'])   # Coluna F: Caminho de origem
-                caminho_destino = Path(row['DESTINO'])  # Coluna I: Caminho de destino
-                caminho_nfts = Path(row['NFTS'])    # Coluna G: Caminho de origem
-                caminho_guias = Path(row['GUIA'])  # Coluna H: Caminho de origem
-                caminho_destino2 = Path(row['DESTINO2']) # Coluna J: Caminho de destino
+            for arquivo in arquivos['guia']:
+                shutil.copy(arquivo, destinos['iss'])
 
-                # Movimentar arquivos de guias
-                try:
-                    if caminho_guias.is_dir():
-                        for arquivo in caminho_guias.glob('*'):
-                            caminho_destino_arquivo = caminho_destino2 / arquivo.name
-                            shutil.move(arquivo, caminho_destino_arquivo)
-                            arquivo_log.write(f"Arquivo {arquivo.name} movido de {caminho_guias} para {caminho_destino_arquivo}\n")
-                    else:
-                        erros_ocorridos = True
-                        arquivo_log.write(f"ERRO: Diretório de origem {caminho_guias} não encontrado. Movimento não realizado.\n")
-                except Exception as error:
-                    erros_ocorridos = True
-                    arquivo_log.write(f"ERRO: Ocorreu um erro ao mover os arquivos de guias: {error}\n")
+            for arquivo in arquivos['nfts']:
+                shutil.copy(arquivo, destinos['nfs'][1])
 
-                # Movimentar arquivos de notas fiscais NFTS
-                try:
-                    if caminho_nfts.is_dir():
-                        for arquivo in caminho_nfts.glob('*'):
-                            if 'nfs' in arquivo.name:
-                                caminho_destino_arquivo = caminho_destino / 'Serviços Tomados' / arquivo.name
-                                shutil.move(arquivo, caminho_destino_arquivo)
-                                arquivo_log.write(f"Arquivo {arquivo.name} movido de {caminho_nfts} para {caminho_destino_arquivo}\n")
-                    else:
-                        erros_ocorridos = True
-                        arquivo_log.write(f"ERRO: Diretório de origem {caminho_nfts} não encontrado. Movimento não realizado.\n")
-                except Exception as error:
-                    erros_ocorridos = True
-                    arquivo_log.write(f"ERRO: Ocorreu um erro ao mover os arquivos de notas fiscais: {error}\n")
+        print(f"Arquivos copiados com sucesso")
+    
+    except FileNotFoundError as e:
+        messages_list.append(f"Erro: Arquivo não encontrado - {e}")
+        save_messages_list_to_desktop(messages_list)
+    
+    except PermissionError as e:
+        messages_list.append(f"Erro: Permissão negada - {e}")
+        save_messages_list_to_desktop(messages_list)
+    
+    except Exception as e:
+        messages_list.append(f"Erro inesperado: {e}")
+        save_messages_list_to_desktop(messages_list)
 
-                # Movimentar arquivos de Prestados Tomados
-                try:
-                    if caminho_origem.is_dir():
-                        for arquivo in caminho_origem.glob('*'):
-                            if 'enviadas' in arquivo.name:
-                                caminho_destino_arquivo = caminho_destino / 'Serviços Prestados' / arquivo.name
-                            elif 'recebidas' in arquivo.name:
-                                caminho_destino_arquivo = caminho_destino / 'Serviços Tomados' / arquivo.name
-                            else:
-                                continue
-                            shutil.move(arquivo, caminho_destino_arquivo)
-                            arquivo_log.write(f"Arquivo {arquivo.name} movido de {caminho_origem} para {caminho_destino_arquivo}\n")
-                    else:
-                        erros_ocorridos = True
-                        arquivo_log.write(f"ERRO: Diretório de origem {caminho_origem} não encontrado. Movimento não realizado.\n")
-                except Exception as error:
-                    erros_ocorridos = True
-                    arquivo_log.write(f"ERRO: Ocorreu um erro ao mover os arquivos de origem: {error}\n")
+    
+    
+    return messages_list
 
-            # Exibir mensagem informando que os arquivos foram movidos com sucesso
-            if erros_ocorridos:
-                QMessageBox.warning(None, "Erros Ocorridos", "Alguns erros ocorreram. Verifique o arquivo de log na área de trabalho.")
-            else:
-                QMessageBox.information(None, "Sucesso", "Fim da execução!")
 
-        except Exception as error:
-            QMessageBox.critical(None, "ERRO", f"Ocorreu um erro: {error}")
-            arquivo_log.write(f"ERRO: Ocorreu um erro: {error}\n")
-            erros_ocorridos = True
+def save_messages_list_to_desktop(messages_list):
+    desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
+    file_path = os.path.join(desktop_path, 'messages_list.txt')
 
-    if erros_ocorridos:
-        QMessageBox.warning(None, "Erros Ocorridos", "Alguns erros ocorreram. Verifique o arquivo de log na área de trabalho.")
+    with open(file_path, 'w') as file:
+        for message in messages_list:
+            file.write(f"{message}\n")
 
-# Executar o loop de eventos do PyQt
-app.exec_()
+    print(f"Mensagens salvas com sucesso em {file_path}")
+
+
+messages = move_files(df_filtrado)
+
+if messages:
+    for message in messages:
+        print('Erro el aglum cliente')
