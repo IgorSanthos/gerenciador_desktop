@@ -5,13 +5,23 @@ from datetime import datetime, timedelta
 
 def move_files(df_filtrado):
     data_atual = datetime.now()
+
+    # Calcular o último mês em relação à data atual
     primeiro_dia_mes_atual = data_atual.replace(day=1)
     ultimo_dia_mes_anterior = primeiro_dia_mes_atual - timedelta(days=1)
-    mes_anterior = ultimo_dia_mes_anterior.strftime('%m')
-    ano_atual = ultimo_dia_mes_anterior.strftime('%Y')
-    dtCliente_Atual = f"{mes_anterior}_{ano_atual}"
+    mes_anterior = ultimo_dia_mes_anterior.month
+    ano_atual = ultimo_dia_mes_anterior.year
 
-    dtCliente = '04_2024'
+    # Obter o nome do mês em português
+    meses_em_portugues = [
+        "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho",
+        "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"
+    ]
+    nome_mes = meses_em_portugues[mes_anterior - 1]  # Ajustando o índice para começar em 0
+
+    # Formatando para o estilo desejado (exemplo: '5_Maio')
+    dtCliente = f"{mes_anterior}_{nome_mes}"
+
     messages_list = []  # Inicializa a lista vazia para armazenar as mensagens
     df = df_filtrado
     try:
@@ -49,7 +59,7 @@ def move_files(df_filtrado):
             for arquivo in arquivos['nfts']:
                 shutil.copy(arquivo, destinos['nfs'][1])
 
-        print(f"Arquivos copiados com sucesso")
+        print(f"Arquivos copiados com sucesso{clienteDest}")
     
     except FileNotFoundError as e:
         messages_list.append(f"Erro: Arquivo não encontrado - {e}")
@@ -77,3 +87,4 @@ def save_messages_list_to_desktop(messages_list):
             file.write(f"{message}\n")
 
     print(f"Mensagens salvas com sucesso em {file_path}")
+
