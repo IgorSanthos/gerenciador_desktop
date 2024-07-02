@@ -1,10 +1,13 @@
 import pandas as pd
 import tkinter as tk
-from tkinter import messagebox, Button, font
+from tkinter import messagebox, Button
 from funcao import move_files, save_messages_list_to_desktop
 from PIL import Image, ImageTk
+from imagem import texto_longo
+import base64
+from io import BytesIO
 
-# Função que processa todos os dados de verificação 
+# Função que processa todos os dados de verificação
 def processar_dados_cluster(dados):
     messages_list = []
     try:
@@ -24,8 +27,9 @@ def processar_dados_cluster(dados):
         messages_list.append(f"Erro inesperado: {e}")
         save_messages_list_to_desktop(messages_list)
         messagebox.showinfo("Erro", f"Erro inesperado: {e}")
-    
+
     return messages_list
+
 
 # Função para executar a função selecionada e mostrar mensagens
 def executar_e_mostrar():
@@ -40,7 +44,6 @@ def executar_e_mostrar():
         messagebox.showinfo("Erro", "Nenhuma função selecionada para essa opção.")
 
 
-
 # Funções que serão executadas pelos botões
 def funcao1():
     try:
@@ -48,48 +51,64 @@ def funcao1():
         return processar_dados_cluster(dados_cluster1)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao2():
     try:
         from dados_cliente.datacluster2 import dados as dados_cluster2
         return processar_dados_cluster(dados_cluster2)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao3():
     try:
         from dados_cliente.datacluster3 import dados as dados_cluster3
         return processar_dados_cluster(dados_cluster3)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao4():
     try:
         from dados_cliente.datacluster4 import dados as dados_cluster3
         return processar_dados_cluster(dados_cluster3)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao5():
     try:
         from dados_cliente.datacluster5 import dados as dados_cluster3
         return processar_dados_cluster(dados_cluster3)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao6():
     try:
         from dados_cliente.datacluster6 import dados as dados_cluster3
         return processar_dados_cluster(dados_cluster3)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao7():
     try:
         from dados_cliente.datacluster7 import dados as dados_cluster3
         return processar_dados_cluster(dados_cluster3)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao8():
     try:
         from dados_cliente.datacluster8 import dados as dados_cluster3
         return processar_dados_cluster(dados_cluster3)
     except ModuleNotFoundError:
         return ["Erro: Módulo não encontrado"]
+
+
 def funcao11():
     try:
         from dados_cliente.datacluster11 import dados as dados_cluster3
@@ -98,14 +117,13 @@ def funcao11():
         return ["Erro: Módulo não encontrado"]
 
 
-
 # Variável global para armazenar a função selecionada
 select_funcao = None
+
 
 # Função para mostrar a opção selecionada e definir select_funcao
 def mostrar_selecao(opcao):
     global select_funcao  # Declarar como global para modificá-la
-    messagebox.showinfo("Opção Selecionada", f"Arquivos do dia {opcao[42:49]} enviados:")
     if opcao == "Cluster Prefeitura Geral | Agendado para o dia 01":
         select_funcao = funcao1
     elif opcao == "Cluster Prefeitura Geral | Agendado para o dia 02":
@@ -130,17 +148,16 @@ def mostrar_selecao(opcao):
 
 # Configuração da janela principal
 root = tk.Tk()
-root.title("Projeto com Tkinter")
+root.title("Gerenciador de arquivos")
 root.geometry('1000x600')
 root.configure(background='white')
-
 
 # Criando os botões e associando-os às funções
 botao1 = Button(root, text="Mover arquivos", command=executar_e_mostrar,
                 foreground="white", background="#ECA521", font=("Helvetica", 14))
 
 botao1.pack(pady=8)
-botao1.place(x=750, y=350) # Posiciona o botão
+botao1.place(x=750, y=350)  # Posiciona o botão
 
 # Lista de opções
 opcoes = [
@@ -164,12 +181,15 @@ menu_selecao = tk.OptionMenu(root, selecao, *opcoes)
 menu_selecao.config(bg="#F2E8DE", fg='#EE3D25', font=('Helvetica', 10))
 menu_selecao.place(x=665, y=400)
 
+base64_string = texto_longo()
 
-imagem = Image.open("img/aside.png")  
-imagem_tk = ImageTk.PhotoImage(imagem)
+image_data = base64.b64decode(base64_string)
+image = Image.open(BytesIO(image_data))
+imagem_tk = ImageTk.PhotoImage(image)
 label_imagem = tk.Label(root, image=imagem_tk)
 label_imagem.pack()
 label_imagem.place(x=50, y=70)
+
 
 textoh1 = "TransferEasy"
 label_texto = tk.Label(root, text=textoh1, background="white", font=("Helvetica", 20, "bold"))

@@ -11,15 +11,15 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\hmf_sistemas_de_energia_comercio_e_imp_780804\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\r2_empreendimentos_1193371\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\roth_sociedade_individual_de_advocacia_794377\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\verardi__mesquita_794395\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l3_780759\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l6_780787\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l2_780833\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l8_780832\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_matriz_780727\notas'
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\hmf_sistemas_de_energia_comercio_e_imp_780804',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\r2_empreendimentos_1193371',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\roth_sociedade_individual_de_advocacia_794377',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\verardi__mesquita_794395',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l3_780759',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l6_780787',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l2_780833',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_filial_l8_780832',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 07\NOTAS\JETTAX\yabiku_matriz_780727'
     ],
     
     'Destino': [

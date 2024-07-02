@@ -11,8 +11,8 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 08\NOTAS\JETTAX\leve_agora_comercio_e_distribuicao_de_780838\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 08\NOTAS\JETTAX\sisnac_matriz_780752\notas'
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 08\NOTAS\JETTAX\leve_agora_comercio_e_distribuicao_de_780838',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 08\NOTAS\JETTAX\sisnac_matriz_780752'
 
     ],
 

@@ -11,17 +11,17 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\dener_brito_nutricionista_ltda_794343\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fernandes_lucena__lopes_consultoria_i_794349\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fernandes_lucena_empreendimentos_imobi_780747\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fn_patrimonial_e_condominios_ltda_780794\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\llrm_restaurante_e_comercio_de_bebidas_ltda_780809\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\manxiang_gui_comercio_de_iluminacao_780775\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\nlb_comercio_de_maquin.e_peas_eireli_780779\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\nlb_industria_de_maquinas_e_equipament_780758\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\sisaltech_eventos_e_administrao_ltda_1153240\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\sjr_imoves_ltda_780812\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\teknovation_equipamentos_e_servios_ltda_972056\notas'
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\dener_brito_nutricionista_ltda_794343',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fernandes_lucena__lopes_consultoria_i_794349',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fernandes_lucena_empreendimentos_imobi_780747',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fn_patrimonial_e_condominios_ltda_780794',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\llrm_restaurante_e_comercio_de_bebidas_ltda_780809',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\manxiang_gui_comercio_de_iluminacao_780775',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\nlb_comercio_de_maquin.e_peas_eireli_780779',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\nlb_industria_de_maquinas_e_equipament_780758',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\sisaltech_eventos_e_administrao_ltda_1153240',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\sjr_imoves_ltda_780812',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\teknovation_equipamentos_e_servios_ltda_972056'
     ],
 
     'Destino': [

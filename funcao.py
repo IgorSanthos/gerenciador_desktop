@@ -2,6 +2,9 @@ import shutil
 import os
 from pathlib import Path
 from datetime import datetime, timedelta
+from tkinter import Tk, Label, Frame, TOP, messagebox
+from tkinter.ttk import Progressbar
+from tqdm import tqdm  # Importa tqdm para a barra de progresso
 
 def move_files(df_filtrado):
     data_atual = datetime.now()
@@ -10,7 +13,6 @@ def move_files(df_filtrado):
     primeiro_dia_mes_atual = data_atual.replace(day=1)
     ultimo_dia_mes_anterior = primeiro_dia_mes_atual - timedelta(days=1)
     mes_anterior = ultimo_dia_mes_anterior.month
-    ano_atual = ultimo_dia_mes_anterior.year
 
     # Obter o nome do mês em português
     meses_em_portugues = [
@@ -24,63 +26,109 @@ def move_files(df_filtrado):
 
     messages_list = []  # Inicializa a lista vazia para armazenar as mensagens
     df = df_filtrado
-    try:
-        for index, row in df.iterrows():
-            #caminho Origem
-            clienteJettax = Path(row['Origem'])
-            #verificar se tem algum erro de Origem
-            if not clienteJettax.exists():
-                messages_list.append (f"Caminho de origem não encontrado: {clienteJettax}")
-                save_messages_list_to_desktop(messages_list)
 
-            #caminho DEstino
+    # Configuração da janela Tkinter
+    root = Tk()
+    root.title("Progresso de Movimentação de Arquivos")
+    root.geometry("400x150")
+
+    # Garante que a janela fique sempre no topo
+    root.lift()
+    root.attributes('-topmost', True)
+
+    # Frame para conter os elementos
+    frame = Frame(root)
+    frame.pack(pady=20)
+
+    # Label informativa
+    lbl_info = Label(frame, text="Movendo arquivos...", font=("Arial", 12))
+    lbl_info.pack(side=TOP)
+
+    # Barra de progresso
+    progress = Progressbar(frame, orient="horizontal", length=300, mode="determinate")
+    progress.pack(pady=10)
+
+    # Função para atualizar a barra de progresso
+    def update_progress(count, total):
+        progress['value'] = (count / total) * 100
+        root.update_idletasks()
+
+    # Função para fechar a janela Tkinter
+    def close_window():
+        root.destroy()
+
+    # Inicia a barra de progresso com o total de iterações
+    total_files = len(df)
+    with tqdm(total=total_files) as pbar:
+        for index, row in df.iterrows():
+            # Caminho Origem
+            clienteJettax = Path(row['Origem'])
+
+            # Verificar se o caminho de origem existe
+            if not clienteJettax.exists():
+                messages_list.append(f"Caminho de origem não encontrado: {clienteJettax}")
+                pbar.update(1)  # Atualiza a barra de progresso
+                update_progress(pbar.n, total_files)
+                continue  # Continua para o próximo arquivo
+
+            # Caminho Destino
             clienteDest = Path(row['Destino']) / dtCliente
             arquivos = {
-                'enviada': list(clienteJettax.glob('enviada*')),
-                'recebida': list(clienteJettax.glob('recebido*')),
-                'nfts': list((clienteJettax / 'nfts').glob('nft*')),
-                'guia': list((clienteJettax / 'guia').glob('guia*'))
+                'enviada': list((clienteJettax/'notas').glob('*enviadas*')),
+                'recebida': list((clienteJettax/'notas').glob('*recebidas*')),
+                'nfts': list((clienteJettax/'nfts').glob('*nfstomados*')),
+                'guias': list((clienteJettax/'guias').glob('*guias*'))
             }
             destinos = {
-                'nfs': [clienteDest /'Arquivos XML/Serviços Prestados', clienteDest / 'Arquivos XML/Serviços Tomados'],
-                'iss': clienteDest /'Tributos'
+                'nfs': [clienteDest / 'Arquivos XML/Serviços Prestados', clienteDest / 'Arquivos XML/Serviços Tomados'],
+                'iss': clienteDest / 'Tributos'
             }
 
             # Envio para Movimentação de Arquivos
-            for arquivo in arquivos['enviada']:
-                shutil.copy(arquivo, destinos['nfs'][0])
+            try:
+                for arquivo in arquivos['enviada']:
+                    shutil.copy(arquivo, destinos['nfs'][0])
                 
-            for arquivo in arquivos['recebida']:
-                shutil.copy(arquivo, destinos['nfs'][1])
+                for arquivo in arquivos['recebida']:
+                    shutil.copy(arquivo, destinos['nfs'][1])
 
-            for arquivo in arquivos['guia']:
-                shutil.copy(arquivo, destinos['iss'])
+                for arquivo in arquivos['guias']:
+                    shutil.copy(arquivo, destinos['iss'])
 
-            for arquivo in arquivos['nfts']:
-                shutil.copy(arquivo, destinos['nfs'][1])
+                for arquivo in arquivos['nfts']:
+                    shutil.copy(arquivo, destinos['nfs'][1])
 
-        print(f"Arquivos copiados com sucesso{clienteDest}")
-    
-    except FileNotFoundError as e:
-        messages_list.append(f"Erro: Arquivo não encontrado - {e}")
-        save_messages_list_to_desktop(messages_list)
-    
-    except PermissionError as e:
-        messages_list.append(f"Erro: Permissão negada - {e}")
-        save_messages_list_to_desktop(messages_list)
-    
-    except Exception as e:
-        messages_list.append(f"Erro inesperado: {e}")
-        save_messages_list_to_desktop(messages_list)
+                messages_list.append(f"Arquivos copiados com sucesso para {clienteDest}")
 
-    
-    
+            except (FileNotFoundError, PermissionError) as e:
+                messages_list.append(f"Erro ao copiar arquivo: {e}")
+                pbar.update(1)  # Atualiza a barra de progresso
+                update_progress(pbar.n, total_files)
+                continue  # Continua para o próximo arquivo
+
+            except Exception as e:
+                messages_list.append(f"Erro inesperado ao copiar arquivo: {e}")
+                pbar.update(1)  # Atualiza a barra de progresso
+                update_progress(pbar.n, total_files)
+                continue  # Continua para o próximo arquivo
+
+            pbar.update(1)  # Atualiza a barra de progresso após o processamento de cada arquivo
+            update_progress(pbar.n, total_files)
+
+    # Salva todas as mensagens ao final do processamento
+    save_messages_list_to_desktop(messages_list)
+    messagebox.showinfo("Aviso","Arquivos do dia enviados com sucesso")
+    # Fecha a janela Tkinter após o término do processamento
+    root.after(1000, close_window)  # Espera 1 segundo antes de fechar a janela
+
+    root.mainloop()
+
     return messages_list
 
 
 def save_messages_list_to_desktop(messages_list):
     desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
-    file_path = os.path.join(desktop_path, 'messages_list.txt')
+    file_path = os.path.join(desktop_path, 'Erros na copia dos arquivos.txt')
 
     with open(file_path, 'w') as file:
         for message in messages_list:
@@ -88,3 +136,8 @@ def save_messages_list_to_desktop(messages_list):
 
     print(f"Mensagens salvas com sucesso em {file_path}")
 
+# Exemplo de uso
+if __name__ == "__main__":
+    # Supondo que `df_filtrado` seja seu DataFrame filtrado
+    # move_files(df_filtrado)
+    pass

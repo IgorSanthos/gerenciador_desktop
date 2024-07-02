@@ -11,14 +11,14 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\chiarato_eventos_e_consultoria_ltda_973399\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\chie_assessoria_empresarial_ltda_780744\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\cinomatic_do_brasil_industria_e_comerc_780731\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\obah_produtos_e_servicos_analiticos_lt_780748\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\opticam_tecnologia_918439\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\swiss_revestimentos_ltda_-_epp_780795\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\zc_rubber_brazil_import_e_export_ltda_780769\notas',
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\dixmedical_produtos_para_a_saude_ltda_837401\notas'
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\chiarato_eventos_e_consultoria_ltda_973399',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\chie_assessoria_empresarial_ltda_780744',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\cinomatic_do_brasil_industria_e_comerc_780731',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\obah_produtos_e_servicos_analiticos_lt_780748',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\opticam_tecnologia_918439',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\swiss_revestimentos_ltda_-_epp_780795',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\zc_rubber_brazil_import_e_export_ltda_780769',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 04\NOTAS\JETTAX\dixmedical_produtos_para_a_saude_ltda_837401'
 
     ],
     'Destino': [
