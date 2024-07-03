@@ -145,20 +145,9 @@ def move_files(df_filtrado):
 
 
 def save_messages_list_to_desktop(messages_list):
-    # Cria uma janela tkinter
-    root = tk.Tk()
-    root.withdraw()  # Oculta a janela principal
-    root.title("Erros")
-    root.geometry('1200x600')
-
-    # Monta as mensagens em uma string para exibir na messagebox
-    message_text = "\n".join(messages_list)
-
-    # Exibe a messagebox com as mensagens
-    messagebox.showinfo("Mensagens", message_text)
-
-    # Fecha a janela tkinter
-    root.destroy()
+    df = pd.DataFrame(messages_list, columns=['Mensagens'])
+    
+    gui = show(df, settings={'block': True})
 
 
 if __name__ == "__main__":
