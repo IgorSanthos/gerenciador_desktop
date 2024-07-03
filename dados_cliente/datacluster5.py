@@ -11,7 +11,6 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 05\NOTAS\JETTAX\atma_pictures_ltda_1193380',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 05\NOTAS\JETTAX\clinica_oftalmologica_arruda_ltda_-_me_794338',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 05\NOTAS\JETTAX\engpoint_servicos_de_engenharia_ltda_780819',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 05\NOTAS\JETTAX\evoluir_instituto_terapeutico_eireli_780734',
@@ -23,7 +22,6 @@ dados = {
     ],
     
     'Destino': [
-        r'W:\Shared With Me\Clientes\Atma Pictures\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Clinica Arruda\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Engpoint Serviços\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Evoluir Instituto\2024\Fiscal',

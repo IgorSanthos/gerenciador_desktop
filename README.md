@@ -8,6 +8,7 @@ git push -u origin main
 
 
 pyinstaller --onefile -w app.py
+
 deactivate
 python -m venv venv
 .\venv\Scripts\Activate.ps1

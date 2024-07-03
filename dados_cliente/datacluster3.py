@@ -11,6 +11,8 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 06\NOTAS\JETTAX\atma_entretenimento_ltda_780780\notas',
+        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 05\NOTAS\JETTAX\atma_pictures_ltda_1193380',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\dener_brito_nutricionista_ltda_794343',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fernandes_lucena__lopes_consultoria_i_794349',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 03\NOTAS\JETTAX\fernandes_lucena_empreendimentos_imobi_780747',
@@ -25,6 +27,8 @@ dados = {
     ],
 
     'Destino': [
+        r'W:\Shared With Me\Clientes\Atma Entretenimento\2024\Fiscal',
+        r'W:\Shared With Me\Clientes\Atma Pictures\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Dener Nutricionista\2024\Fiscal',
         r'W:\Shared With Me\Clientes\FL Lopes (barueri)\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Fernandes Lucena Matriz\2024\Fiscal',
@@ -36,6 +40,7 @@ dados = {
         r'W:\Shared With Me\Clientes\Sisaltech\2024\Fiscal',
         r'W:\Shared With Me\Clientes\SJR Imoveis - Monica Imoveis\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Teknovation\2024\Fiscal'
+        
 
     ]
 }

@@ -1,10 +1,13 @@
 import shutil
+import tkinter as tk
 import os
 from pathlib import Path
 from datetime import datetime, timedelta
 from tkinter import Tk, Label, Frame, TOP, messagebox
 from tkinter.ttk import Progressbar
 from tqdm import tqdm  # Importa tqdm para a barra de progresso
+import pandas as pd
+from pandasgui import show
 
 def move_files(df_filtrado):
     data_atual = datetime.now()
@@ -66,7 +69,13 @@ def move_files(df_filtrado):
 
             # Verificar se o caminho de origem existe
             if not clienteJettax.exists():
-                messages_list.append(f"Caminho de origem não encontrado: {clienteJettax}")
+                # Separando as barras para que seja retirado do endereço o nome do cliente
+                clienteJettax=str(clienteJettax)
+                terceira_barra_cliente = clienteJettax.find('\\', clienteJettax.find('\\', clienteJettax.find('\\') + 1) + 1)
+                quarta_barra_cliente = clienteJettax.find('\\', terceira_barra_cliente + 1)
+                clienteJettax_name = clienteJettax[terceira_barra_cliente + 1:quarta_barra_cliente]               
+                messages_list.append(f"Caminho de origem não encontrado: {clienteJettax_name}")
+                # barra de progresso
                 pbar.update(1)  # Atualiza a barra de progresso
                 update_progress(pbar.n, total_files)
                 continue  # Continua para o próximo arquivo
@@ -74,16 +83,16 @@ def move_files(df_filtrado):
             # Caminho Destino
             clienteDest = Path(row['Destino']) / dtCliente
             arquivos = {
-                'enviada': list((clienteJettax/'notas').glob('*enviadas*')),
-                'recebida': list((clienteJettax/'notas').glob('*recebidas*')),
-                'nfts': list((clienteJettax/'nfts').glob('*nfstomados*')),
-                'guias': list((clienteJettax/'guias').glob('*guias*'))
+                'enviada': list((clienteJettax/'notas').glob('enviadas*')),
+                'recebida': list((clienteJettax/'notas').glob('recebidas*')),
+                'nfts': list((clienteJettax/'nfts').glob('nfs*')),
+                'guias': list((clienteJettax/'guias').glob('guias*')),
+                'resumo_guias': list((clienteJettax/'guias').glob('resumo_guias_guias*'))
             }
             destinos = {
                 'nfs': [clienteDest / 'Arquivos XML/Serviços Prestados', clienteDest / 'Arquivos XML/Serviços Tomados'],
                 'iss': clienteDest / 'Tributos'
             }
-
             # Envio para Movimentação de Arquivos
             try:
                 for arquivo in arquivos['enviada']:
@@ -94,20 +103,29 @@ def move_files(df_filtrado):
 
                 for arquivo in arquivos['guias']:
                     shutil.copy(arquivo, destinos['iss'])
+                
+                for arquivo in arquivos['resumo_guias']:
+                    shutil.copy(arquivo, destinos['iss'])
 
                 for arquivo in arquivos['nfts']:
                     shutil.copy(arquivo, destinos['nfs'][1])
-
-                messages_list.append(f"Arquivos copiados com sucesso para {clienteDest}")
-
+                    
+                # Separando as barras para que seja retirado do endereço o nome do cliente
+                clienteDest=str(clienteDest)
+                terceira_barra = clienteDest.find('\\', clienteDest.find('\\', clienteDest.find('\\') + 1) + 1)
+                quarta_barra = clienteDest.find('\\', terceira_barra + 1)
+                client_name = clienteDest[terceira_barra + 1:quarta_barra]
+                messages_list.append(f"Arquivos do ( {client_name} ) copiados com sucesso !")
+            # tratamento de Erros
             except (FileNotFoundError, PermissionError) as e:
                 messages_list.append(f"Erro ao copiar arquivo: {e}")
+                # barra de progresso
                 pbar.update(1)  # Atualiza a barra de progresso
                 update_progress(pbar.n, total_files)
                 continue  # Continua para o próximo arquivo
-
             except Exception as e:
                 messages_list.append(f"Erro inesperado ao copiar arquivo: {e}")
+                # barra de progresso
                 pbar.update(1)  # Atualiza a barra de progresso
                 update_progress(pbar.n, total_files)
                 continue  # Continua para o próximo arquivo
@@ -127,17 +145,21 @@ def move_files(df_filtrado):
 
 
 def save_messages_list_to_desktop(messages_list):
-    desktop_path = os.path.join(os.path.expanduser('~'), 'Desktop')
-    file_path = os.path.join(desktop_path, 'Erros na copia dos arquivos.txt')
+    # Cria uma janela tkinter
+    root = tk.Tk()
+    root.withdraw()  # Oculta a janela principal
+    root.title("Erros")
+    root.geometry('1200x600')
 
-    with open(file_path, 'w') as file:
-        for message in messages_list:
-            file.write(f"{message}\n")
+    # Monta as mensagens em uma string para exibir na messagebox
+    message_text = "\n".join(messages_list)
 
-    print(f"Mensagens salvas com sucesso em {file_path}")
+    # Exibe a messagebox com as mensagens
+    messagebox.showinfo("Mensagens", message_text)
 
-# Exemplo de uso
+    # Fecha a janela tkinter
+    root.destroy()
+
+
 if __name__ == "__main__":
-    # Supondo que `df_filtrado` seja seu DataFrame filtrado
-    # move_files(df_filtrado)
     pass

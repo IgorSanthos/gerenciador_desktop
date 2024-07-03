@@ -167,7 +167,7 @@ dados = {
         r'W:\Shared With Me\Clientes\Roxane Lillian\2024\Fiscal',
         r'W:\Shared With Me\Clientes\R&Y Sistema\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Safety\2024\Fiscal',
-        r'W:\Shared With Me\Clientes\Salgateria e Pastelaria\2024\Fiscal',
+        r'W:\Shared With Me\Clientes\Salgateria\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Santo Brinde\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Sao Jorge Alimentos\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Sao Luiz\2024\Fiscal',
@@ -187,7 +187,7 @@ dados = {
         r'W:\Shared With Me\Clientes\Tutti Belli\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Twr filial manaus (filial 02)\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Twr filial manaus (filial 02)\2024\Fiscal',
-        r'W:\Shared With Me\Clientes\TWR (Matriz)\2024\Fiscal',
+        r'W:\Shared With Me\Clientes\TWR Matriz\2024\Fiscal',
         r'W:\Shared With Me\Clientes\WW Comercio\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Yatong Sul\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Yurika Comércio\2024\Fiscal'

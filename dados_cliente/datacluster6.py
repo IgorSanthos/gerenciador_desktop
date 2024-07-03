@@ -11,7 +11,6 @@ dtCliente_Atual = f"{mes_anterior} {ano_atual}"
 
 dados = {
     'Origem': [
-        rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 06\NOTAS\JETTAX\atma_entretenimento_ltda_780780\notas',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 06\NOTAS\JETTAX\dixmedical_produtos_para_a_saude_ltda_837401\notas',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 06\NOTAS\JETTAX\r1_solutions_informatica_eireli_epp_780743\notas',
         rf'W:\Shared With Me\Clientes\Jettax\{dtCliente_Atual}\NFS 06\NOTAS\JETTAX\r2c_eventos_ltda_780834\notas',
@@ -20,7 +19,6 @@ dados = {
     ],
 
     'Destino': [
-        r'W:\Shared With Me\Clientes\Atma Entretenimento\2024\Fiscal',
         r'W:\Shared With Me\Clientes\Dixmedical Produtos\2024\Fiscal',
         r'W:\Shared With Me\Clientes\R1 Audiovisual (letsee)\2024\Fiscal',
         r'W:\Shared With Me\Clientes\R2C Eventos\2024\Fiscal',
